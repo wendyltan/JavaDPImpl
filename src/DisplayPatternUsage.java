@@ -3,6 +3,7 @@ import BridgePattern.Circle;
 import BridgePattern.GreenCircle;
 import BridgePattern.RedCircle;
 import BridgePattern.Shape;
+import BuilderPattern.File;
 import FacadePattern.ShapeFacade;
 import FactoryPattern.ShapeFactory;
 import StrategyPattern.Context;
@@ -49,6 +50,20 @@ public class DisplayPatternUsage {
         FactoryPattern.Shape shape3 = shapeFactory.getShape("SQUARE");
         shape3.draw();
 
+        divideHeaderOutput("Usage of builder pattern implementation");
+        File file1 = new File.Builder("hello",120,"C://").fileEdit("yesterday").build();
+        System.out.println(file1.getAllInfo());
+        File file2 = new File.Builder("goodbye",999,"D://asd")
+                .fileEdit("today")
+                .fileHash("213213")
+                .build();
+        System.out.println(file2.getAllInfo());
+        File file3 = new File.Builder("sayonara",11111,"F://")
+                .fileEdit("two weeks ago")
+                .fileHash("12312313")
+                .fileType("exe")
+                .build();
+        System.out.println(file3.getAllInfo());
 
 
     }
