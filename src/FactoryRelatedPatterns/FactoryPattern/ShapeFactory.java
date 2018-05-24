@@ -1,4 +1,4 @@
-package FactoryPattern;
+package FactoryRelatedPatterns.FactoryPattern;
 
 public class ShapeFactory {
     public Shape getShape(String shapeType){

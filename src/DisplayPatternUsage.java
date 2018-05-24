@@ -1,3 +1,6 @@
+import FactoryRelatedPatterns.AbstractFactory.AbstFactory;
+import FactoryRelatedPatterns.AbstractFactory.Color;
+import FactoryRelatedPatterns.AbstractFactory.FactoryProducer;
 import AdapterPattern.AudioPlayer;
 import BridgePattern.Circle;
 import BridgePattern.GreenCircle;
@@ -5,7 +8,10 @@ import BridgePattern.RedCircle;
 import BridgePattern.Shape;
 import BuilderPattern.File;
 import FacadePattern.ShapeFacade;
-import FactoryPattern.ShapeFactory;
+import FactoryRelatedPatterns.FactoryMethod.NYPizzaStore;
+import FactoryRelatedPatterns.FactoryMethod.Pizza;
+import FactoryRelatedPatterns.FactoryMethod.PizzaStore;
+import FactoryRelatedPatterns.FactoryPattern.ShapeFactory;
 import StrategyPattern.Context;
 import StrategyPattern.OperationAdd;
 import StrategyPattern.OperationMultiply;
@@ -43,11 +49,11 @@ public class DisplayPatternUsage {
 
         divideHeaderOutput("Usage of factory pattern implementation");
         ShapeFactory shapeFactory = new ShapeFactory();
-        FactoryPattern.Shape shape1 = shapeFactory.getShape("CIRCLE");
+        FactoryRelatedPatterns.FactoryPattern.Shape shape1 = shapeFactory.getShape("CIRCLE");
         shape1.draw();
-        FactoryPattern.Shape shape2 = shapeFactory.getShape("RECTANGLE");
+        FactoryRelatedPatterns.FactoryPattern.Shape shape2 = shapeFactory.getShape("RECTANGLE");
         shape2.draw();
-        FactoryPattern.Shape shape3 = shapeFactory.getShape("SQUARE");
+        FactoryRelatedPatterns.FactoryPattern.Shape shape3 = shapeFactory.getShape("SQUARE");
         shape3.draw();
 
         divideHeaderOutput("Usage of builder pattern implementation");
@@ -64,6 +70,37 @@ public class DisplayPatternUsage {
                 .fileType("exe")
                 .build();
         System.out.println(file3.getAllInfo());
+
+        divideHeaderOutput("Usage of abstract factory implementation");
+        AbstFactory factory= FactoryProducer.getFactory("SHAPE");
+
+        FactoryRelatedPatterns.AbstractFactory.Shape ashape1 = factory.getShape("CIRCLE");
+        ashape1.draw();
+
+        FactoryRelatedPatterns.AbstractFactory.Shape ashape2 = factory.getShape("RECTANGLE");
+        ashape2.draw();
+
+        FactoryRelatedPatterns.AbstractFactory.Shape ashape3 = factory.getShape("SQUARE");
+        ashape3.draw();
+
+        AbstFactory colorFactory = FactoryProducer.getFactory("COLOR");
+
+        Color color1 = colorFactory.getColor("RED");
+        color1.fill();
+
+        Color color2 = colorFactory.getColor("Green");
+        color2.fill();
+
+        Color color3 = colorFactory.getColor("BLUE");
+        color3.fill();
+
+        divideHeaderOutput("Usage of factory method implementation");
+        //Notice that here can be more factory patterns!Like wrapping in Abstract factory.
+        PizzaStore pizzaStore = new NYPizzaStore();
+        Pizza pizza1 = pizzaStore.orderPizza("CHEESE");
+        Pizza pizza2 = pizzaStore.orderPizza("PEPPERONI");
+        Pizza pizza3 = pizzaStore.orderPizza("GREEK");
+
 
 
     }
