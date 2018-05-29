@@ -12,6 +12,10 @@ import FactoryRelatedPatterns.FactoryMethod.NYPizzaStore;
 import FactoryRelatedPatterns.FactoryMethod.Pizza;
 import FactoryRelatedPatterns.FactoryMethod.PizzaStore;
 import FactoryRelatedPatterns.FactoryPattern.ShapeFactory;
+import ObserverPattern.BinaryObserver;
+import ObserverPattern.OctalObserver;
+import ObserverPattern.Subject;
+import SingletonPattern.SingleObject;
 import StrategyPattern.Context;
 import StrategyPattern.OperationAdd;
 import StrategyPattern.OperationMultiply;
@@ -100,6 +104,24 @@ public class DisplayPatternUsage {
         Pizza pizza1 = pizzaStore.orderPizza("CHEESE");
         Pizza pizza2 = pizzaStore.orderPizza("PEPPERONI");
         Pizza pizza3 = pizzaStore.orderPizza("GREEK");
+
+        divideHeaderOutput("Usage of observer pattern implementation");
+        Subject subject = new Subject();
+        //Already bind and register!
+        new BinaryObserver(subject);
+        new OctalObserver(subject);
+        //Now subject has two observers,when state change,
+        //subject will notify all obsevers and tell them to do their jobs
+        System.out.println("First state change: 15");
+        subject.setState(15);
+        System.out.println("Second state change: 10");
+        subject.setState(10);
+
+
+        divideHeaderOutput("Usage of singleton pattern implementation");
+        SingleObject object = SingleObject.getInstance();
+        object.showMessage();
+
 
 
 
