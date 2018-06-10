@@ -1,3 +1,7 @@
+import DecoratorPattern.Beverage;
+import DecoratorPattern.Coffee;
+import DecoratorPattern.Honey;
+import DecoratorPattern.Milk;
 import FactoryRelatedPatterns.AbstractFactory.AbstFactory;
 import FactoryRelatedPatterns.AbstractFactory.Color;
 import FactoryRelatedPatterns.AbstractFactory.FactoryProducer;
@@ -16,12 +20,20 @@ import ObserverPattern.BinaryObserver;
 import ObserverPattern.OctalObserver;
 import ObserverPattern.Subject;
 import SingletonPattern.SingleObject;
+import StatePattern.StartState;
+import StatePattern.StopState;
 import StrategyPattern.Context;
 import StrategyPattern.OperationAdd;
 import StrategyPattern.OperationMultiply;
 import StrategyPattern.OperationSubstract;
+import TemplatePattern.Cricket;
+import TemplatePattern.Football;
+import TemplatePattern.Game;
 
 public class DisplayPatternUsage {
+    private static final String colors[] =
+            { "Red", "Green", "Blue", "White", "Black" };
+
     public static void main(String[] args){
 
         divideHeaderOutput("Usage of facade pattern implementation");
@@ -122,7 +134,39 @@ public class DisplayPatternUsage {
         SingleObject object = SingleObject.getInstance();
         object.showMessage();
 
+        divideHeaderOutput("Usage of decorator pattern implementation");
+        Beverage coffee = new Coffee();
+        Beverage honey = new Honey(coffee);
+        Beverage milk = new Milk(honey);
+        milk.cook();
 
+        divideHeaderOutput("Usage of state pattern implementation");
+        StatePattern.Context stateMachine = new  StatePattern.Context();
+        StartState startState = new StartState();
+        startState.doAction(stateMachine);
+        System.out.println(stateMachine.getState().toString());
+        StopState stopState = new StopState();
+        stopState.doAction(stateMachine);
+        System.out.println(stateMachine.getState().toString());
+
+
+        divideHeaderOutput("Usage of template pattern implementation");
+        Game game = new Cricket();
+        game.play();
+        System.out.println();
+        game = new Football();
+        game.play();
+
+        divideHeaderOutput("Usage of flyweight pattern implementation");
+
+        for(int i=0; i < 20; ++i) {
+            FlyweightPattern.Circle circle =
+                    (FlyweightPattern.Circle) FlyweightPattern.ShapeFactory.getCircle(getRandomColor());
+            circle.setX(getRandomX());
+            circle.setY(getRandomY());
+            circle.setRadius(100);
+            circle.draw();
+        }
 
 
     }
@@ -130,4 +174,15 @@ public class DisplayPatternUsage {
     public static void divideHeaderOutput(String info){
         System.out.println(String.format("------------------%s-----------------",info));
     }
+
+    private static String getRandomColor() {
+        return colors[(int)(Math.random()*colors.length)];
+    }
+    private static int getRandomX() {
+        return (int)(Math.random()*100 );
+    }
+    private static int getRandomY() {
+        return (int)(Math.random()*100);
+    }
+
 }
