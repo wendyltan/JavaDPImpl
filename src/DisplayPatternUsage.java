@@ -1,3 +1,7 @@
+import CommandPattern.Broker;
+import CommandPattern.BuyStock;
+import CommandPattern.SellStock;
+import CommandPattern.Stock;
 import DecoratorPattern.Beverage;
 import DecoratorPattern.Coffee;
 import DecoratorPattern.Honey;
@@ -168,6 +172,16 @@ public class DisplayPatternUsage {
             circle.draw();
         }
 
+        divideHeaderOutput("Usage of command pattern implementation");
+        Stock abcStock = new Stock();
+        BuyStock buyStockOrder = new BuyStock(abcStock);
+        SellStock sellStockOrder = new SellStock(abcStock);
+
+        Broker broker = new Broker();
+        broker.takeOrder(buyStockOrder);
+        broker.takeOrder(sellStockOrder);
+
+        broker.placeOrders();
 
     }
 
