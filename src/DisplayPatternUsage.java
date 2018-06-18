@@ -2,6 +2,7 @@ import CommandPattern.Broker;
 import CommandPattern.BuyStock;
 import CommandPattern.SellStock;
 import CommandPattern.Stock;
+import CompositePattern.Employee;
 import DecoratorPattern.Beverage;
 import DecoratorPattern.Coffee;
 import DecoratorPattern.Honey;
@@ -183,6 +184,35 @@ public class DisplayPatternUsage {
 
         broker.placeOrders();
 
+        divideHeaderOutput("Usage of composite pattern implementation");
+        //init lots of Employee instances.
+        Employee CEO = new Employee("John","CEO", 30000);
+        Employee headSales = new Employee("Robert","Head Sales", 20000);
+        Employee headMarketing = new Employee("Michel","Head Marketing", 20000);
+        Employee clerk1 = new Employee("Laura","Marketing", 10000);
+        Employee clerk2 = new Employee("Bob","Marketing", 10000);
+        Employee salesExecutive1 = new Employee("Richard","Sales", 10000);
+        Employee salesExecutive2 = new Employee("Rob","Sales", 10000);
+        //construct the tree structure within those instances:
+        CEO.add(headSales);
+        CEO.add(headMarketing);
+
+        headSales.add(salesExecutive1);
+        headSales.add(salesExecutive2);
+
+        headMarketing.add(clerk1);
+        headMarketing.add(clerk2);
+
+        //print out the tree structure:
+        System.out.println(CEO);
+        System.out.println("|----------------|");
+        for (Employee headEmployee : CEO.getSubordinates()) {
+            System.out.println(headEmployee);
+            System.out.println("|----------------|");
+            for (Employee employee : headEmployee.getSubordinates()) {
+                System.out.println(employee);
+            }
+        }
     }
 
     public static void divideHeaderOutput(String info){
