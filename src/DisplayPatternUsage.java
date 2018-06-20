@@ -24,6 +24,12 @@ import FactoryRelatedPatterns.FactoryPattern.ShapeFactory;
 import ObserverPattern.BinaryObserver;
 import ObserverPattern.OctalObserver;
 import ObserverPattern.Subject;
+import ProxyPattern.Image;
+import ProxyPattern.ProxyImage;
+import ResponsibilityChainPattern.AbstractLogger;
+import ResponsibilityChainPattern.ConsoleLogger;
+import ResponsibilityChainPattern.ErrorLogger;
+import ResponsibilityChainPattern.FileLogger;
 import SingletonPattern.SingleObject;
 import StatePattern.StartState;
 import StatePattern.StopState;
@@ -213,6 +219,26 @@ public class DisplayPatternUsage {
                 System.out.println(employee);
             }
         }
+        divideHeaderOutput("Usage of proxy pattern implementation");
+        Image image = new ProxyImage("text1.psd");
+
+        image.display();
+        System.out.println("");
+        //has been loaded once!won't load again...
+        image.display();
+
+        divideHeaderOutput("Usage of responsibility chain pattern implementation");
+        AbstractLogger loggerChain = getChainOfLoggers();
+
+        loggerChain.logMessage(AbstractLogger.INFO,
+                "This is an information.");
+        System.out.println(" ");
+        loggerChain.logMessage(AbstractLogger.DEBUG,
+                "This is an debug level information.");
+        System.out.println(" ");
+        loggerChain.logMessage(AbstractLogger.ERROR,
+                "This is an error information.");
+
     }
 
     public static void divideHeaderOutput(String info){
@@ -227,6 +253,18 @@ public class DisplayPatternUsage {
     }
     private static int getRandomY() {
         return (int)(Math.random()*100);
+    }
+    private static AbstractLogger getChainOfLoggers(){
+
+        AbstractLogger errorLogger = new ErrorLogger(AbstractLogger.ERROR);
+        AbstractLogger fileLogger = new FileLogger(AbstractLogger.DEBUG);
+        AbstractLogger consoleLogger = new ConsoleLogger(AbstractLogger.INFO);
+
+        errorLogger.setNextLogger(fileLogger);
+        fileLogger.setNextLogger(consoleLogger);
+        //the chain is: error-->file-->console
+
+        return errorLogger;
     }
 
 }
